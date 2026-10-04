@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Exhumed is an intense, action-packed survival game that plunges players into a world where the undead have risen, and only one person can stand against the horde.">
+  <title>Exhumed</title>
+  <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.24/dist/tailwind.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/keyboard-css@1.2.4/dist/css/main.min.css" />
+</head>
+
+<body class="bg-gray-900">
+
+  <div id="app"></div>
+
+  <div id="controls" class="btns fixed top-6 left-1/2 transform -translate-x-1/2 mt-8 text-center hidden text-white">
+    <p>Move</p>
+    <div class="w mb-4">
+      <kbd class="kbc-button">W</kbd>
+    </div>
+    <div class="flex gap-4 mb-4 justify-center">
+      <kbd class="kbc-button">A</kbd>
+      <kbd class="kbc-button">S</kbd>
+      <kbd class="kbc-button">D</kbd>
+    </div>
+    <p>Space</p>
+    <kbd class="kbc-button mb-4">Jump</kbd>
+    <p>Shoot</p>
+    <kbd class="kbc-button mb-4">Left Mouse Click</kbd>
+    <div class="flex gap-4 justify-center items-center">
+      <p>Reload</p>
+      <kbd class="kbc-button mb-4">R</kbd>
+      <p>Pause</p>
+      <kbd class="kbc-button mb-4">P</kbd>
+      <p>Controls</p>
+      <kbd class="kbc-button mb-4">C</kbd>
+    </div>
+  </div>
+
+  <div id="loading-screen" class="fixed inset-0 bg-cover flex items-center justify-center z-50">
+    <div class="text-center text-white">
+      <img class="animate-pulse mb-32" src="/exhumed-logo.png" alt="Exhumed logo" />
+      <p class="mb-6 text-lg">Fear the night, fear the horde. Only you can stop them...</p>
+      <div id="progress-bar-container" class="w-full h-6 bg-gray-600 rounded-sm relative overflow-hidden">
+        <div id="progress-bar" class="h-full bg-white animate-pulse absolute left-0 top-0"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="bullet-display"
+    class="absolute bottom-12 right-6 text-white text-3xl font-bold py-2 px-4 select-none rotate-12 text-shadow flex items-center space-x-2">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="fill-current text-white">
+      <g transform="scale(1, -1) translate(0, -24)">
+        <rect x="7" y="3" width="10" height="18" rx="3" />
+        <rect x="8" y="0" width="8" height="3" rx="1" />
+      </g>
+    </svg>
+    <span></span>
+  </div>
+
+  <div id="health-display"
+    class="absolute bottom-12 left-6 text-white text-3xl font-bold py-2 px-4 select-none -rotate-12 text-shadow flex items-center space-x-2">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="fill-current text-white">
+      <path
+        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+    </svg>
+    <span></span>
+  </div>
+
+  <div id="zombie-kill-display"
+    class="flex items-center justify-center gap-2 text-3xl text-white font-bold absolute top-4 left-1/2 -translate-x-1/2">
+    <i class="fas fa-skull text-[22px]"></i>
+    <span id="kill-count" class="text-shadow">0</span>
+  </div>
+
+  <div id="pause-menu" class="fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-70 hidden">
+    <div class="bg-zinc-900 text-gray-200 border-4 border-red-700 shadow-2xl rounded-lg p-8 w-11/12 max-w-md relative">
+      <h2 class="text-4xl font-extrabold mb-6 text-center text-red-600 tracking-widest glitch" data-text="PAUSED">PAUSED
+      </h2>
+
+      <button id="resume-button"
+        class="w-full py-3 px-4 bg-gradient-to-r from-red-800 to-red-600 text-white font-bold text-lg tracking-wide rounded-lg shadow-lg hover:from-red-600 hover:to-red-500 hover:scale-105 transform transition-transform duration-200 focus:outline-none focus:ring-4 focus:ring-red-700">
+        Resume
+      </button>
+
+      <p class="text-center mt-8 text-sm text-red-500">"They’re still out there... waiting for you."</p>
+
+      <div class="absolute inset-0 bg-noise opacity-10 pointer-events-none"></div>
+    </div>
+  </div>
+
+  <div id="game-over-screen" style="display: none;">
+    <h1 id="game-over-heading">Game Over</h1>
+    <button id="restart-button">
+      Restart
+    </button>
+  </div>
+
+  <div id="blood-overlay"></div>
+
+  <div id="boss-health-container">
+    <h2 id="boss-health-title">Boss Health</h2>
+    <div class="rounded-sm" id="boss-health-bar-container">
+      <div id="boss-health-bar"></div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
